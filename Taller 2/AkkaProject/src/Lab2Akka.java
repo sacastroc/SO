@@ -22,7 +22,7 @@ public class Lab2Akka {
 		for (int j = 0; j < vb.length; j++) {
 			vb[j] = Integer.valueOf(sc.nextLine());
 		}
-		ActorSystem system=ActorSystem.create("Hola");
+		ActorSystem system=ActorSystem.create("Bank");
 		ActorRef helloActor = system.actorOf(new Props(Lab2BancoA.class), "C1");
 		helloActor.tell(va,null);
 		ActorRef helloActor2 = system.actorOf(new Props(Lab2BancoA.class), "C2");
@@ -31,29 +31,41 @@ public class Lab2Akka {
 		system.awaitTermination();
 	}
 }
-class Lab2BancoA extends UntypeActor{
+class Lab2BancoA extends UntypedActor{
 	int [] numbers;
 	int sum;
 	int cuenta;
 	int temp;
 	
-	public Lab2BancoA(int[] numbers, int sum, int cuenta, int temp) {
-	this.numbers = numbers;
-	this.sum = sum;
-	this.cuenta = cuenta;
-	this.temp = temp;
-	
-}
-public void run(int[] numbers) {
-	sum = 0;
-	cuenta = 0;
-	temp = 0;
-	for (int i : numbers) {
-		temp = i;
-		cuenta = temp + sum;
-		sum = cuenta;
+//	public Lab2BancoA(int[] numbers, int sum, int cuenta, int temp) {
+//	this.numbers = numbers;
+//	this.sum = sum;
+//	this.cuenta = cuenta;
+//	this.temp = temp;
+//	}
+
+	public void run(int[] numbers) {
+		sum = 0;
+		cuenta = 0;
+		temp = 0;
+		for (int i : numbers) {
+			temp = i;
+			cuenta = temp + sum;
+			sum = cuenta;
+		}
+		System.out.println(sum);
 	}
-	System.out.println(sum);
-}
+	
+	@Override
+	public void onReceive(Object msg) throws Exception {
+		int[] s =(int[])msg;
+		int sz = s.length;
+		if (sz > 0) {
+			System.out.println("Procesando valores de " + sz);
+			run(s);
+		}else{
+			System.out.println("Aqui no hay nada!");
+		}
+	}
 }
 
