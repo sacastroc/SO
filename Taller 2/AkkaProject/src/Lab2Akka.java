@@ -21,49 +21,30 @@ public class Lab2Akka {
 		for (int j = 0; j < vb.length; j++) {
 			vb[j] = Integer.valueOf(sc.nextLine());
 		}
-		ActorSystem system=ActorSystem.create("Bank");
-		ActorRef helloActor = system.actorOf(new Props(Lab2BancoA.class),"C1");
-		helloActor.tell(va,null);
-		ActorRef helloActor2 = system.actorOf(new Props(Lab2BancoA.class), "C2");
-		helloActor2.tell(vb,null);
+		ActorSystem system=ActorSystem.create("Hola");
+		ActorRef helloActor = system.actorOf(new Props(HelloActor.class), "hola");
+		helloActor.tell("hello",null);
+		ActorRef helloActor2 = null;
+		helloActor2.tell("hello",null);
 		system.shutdown();
 		system.awaitTermination();//JOIN
 	}
 }
-class Lab2BancoA extends UntypedActor{
-	
-	int[] numbers;
-	int sum;
-	int cuenta;
-	int temp;
-	
-//	public Lab2BancoA(int[] numbers, int sum, int cuenta, int temp) {
-//		this.numbers = numbers;
-//		this.sum = sum;
-//		this.cuenta = cuenta;
-//		this.temp = temp;
+//class HelloActor extends UntypedActor{
+//	@Override
+//	public void onReceive(Object message) throws Exception {
+//		if(message instanceof String ) {
+//			String s=(String)message;
+//			switch (s){
+//				case "hello":{
+//					System.out.println("hello you");
+//					break;
+//				}default:
+//					System.out.println("huu?");
+//			}
+//		}else{
+//		unhandled(message);
+//		
+//		}
 //	}
-	public void run(int[] numbers) {
-		sum = 0;
-		cuenta = 0;
-		temp = 0;
-		for (int i : numbers) {
-			temp = i;
-			cuenta = temp + sum;
-			sum = cuenta;
-		}
-		System.out.println(sum);
-	}
-
-	@Override
-	public void onReceive(Object msg) throws Exception {
-		int[] s =(int[])msg;
-		int sz = s.length;
-		if (sz > 0) {
-			System.out.println("Procesando valores de " + sz);
-			run(s);
-		}else{
-			System.out.println("Aqui no hay nada!");
-		}
-	}
-}
+//}
