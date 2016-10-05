@@ -1,5 +1,6 @@
 import java.util.Scanner;
 
+
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
@@ -22,29 +23,37 @@ public class Lab2Akka {
 			vb[j] = Integer.valueOf(sc.nextLine());
 		}
 		ActorSystem system=ActorSystem.create("Hola");
-		ActorRef helloActor = system.actorOf(new Props(HelloActor.class), "hola");
-		helloActor.tell("hello",null);
-		ActorRef helloActor2 = null;
-		helloActor2.tell("hello",null);
+		ActorRef helloActor = system.actorOf(new Props(Lab2BancoA.class), "C1");
+		helloActor.tell(va,null);
+		ActorRef helloActor2 = system.actorOf(new Props(Lab2BancoA.class), "C2");
+		helloActor2.tell(vb,null);
 		system.shutdown();
-		system.awaitTermination();//JOIN
+		system.awaitTermination();
 	}
 }
-//class HelloActor extends UntypedActor{
-//	@Override
-//	public void onReceive(Object message) throws Exception {
-//		if(message instanceof String ) {
-//			String s=(String)message;
-//			switch (s){
-//				case "hello":{
-//					System.out.println("hello you");
-//					break;
-//				}default:
-//					System.out.println("huu?");
-//			}
-//		}else{
-//		unhandled(message);
-//		
-//		}
-//	}
-//}
+class Lab2BancoA extends UntypeActor{
+	int [] numbers;
+	int sum;
+	int cuenta;
+	int temp;
+	
+	public Lab2BancoA(int[] numbers, int sum, int cuenta, int temp) {
+	this.numbers = numbers;
+	this.sum = sum;
+	this.cuenta = cuenta;
+	this.temp = temp;
+	
+}
+public void run(int[] numbers) {
+	sum = 0;
+	cuenta = 0;
+	temp = 0;
+	for (int i : numbers) {
+		temp = i;
+		cuenta = temp + sum;
+		sum = cuenta;
+	}
+	System.out.println(sum);
+}
+}
+
