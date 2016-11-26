@@ -23,17 +23,19 @@ public class Main {
 		private static Lock Molokai;
 		
 		
-		public static void begin(int adult, int child){
-			oahuChildren = child;
-			oahuAdults = adult;
+		public static void begin(){
+			Random r = new Random();
+			int numChild = r.nextInt(50);
+			int numAdult = r.nextInt(50);
+			
+			oahuChildren =numChild ;
+			oahuAdults = numAdult;
 			molokaiChildren = 0;
 			molokaiAdults = 0;
 			childrenWaitBoat = 0;
 			boatOnOahu = true;
 			
-			Random r = new Random();
-			int numChild = r.nextInt(50);
-			int numAdult = r.nextInt(50);
+			
 			
 			for (int i = 0; i < numChild; i++) {
 				new Children(0).setName("Child("+i+")");
