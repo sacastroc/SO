@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 
@@ -30,27 +31,18 @@ public class Main {
 			childrenWaitBoat = 0;
 			boatOnOahu = true;
 			
-			for (int i = 0; i < child; i++) {
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						
-					}
-				}).setName("child("+i+")");
+			Random r = new Random();
+			int numChild = r.nextInt(50);
+			int numAdult = r.nextInt(50);
+			
+			for (int i = 0; i < numChild; i++) {
+				new Children(0,i);
 			}
 			
-			for (int i = 0; i < adult; i++) {
-				new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						
-					}
-				}).setName("adult("+i+")");;
+			for (int i = 0; i < numAdult; i++) {
+				new Adult(0,i);
 			}
+			
 			
 		}
 	
