@@ -36,11 +36,11 @@ public class Main {
 			int numAdult = r.nextInt(50);
 			
 			for (int i = 0; i < numChild; i++) {
-				new Children(0,i);
+				new Children(0).setName("Child("+i+")");
 			}
 			
 			for (int i = 0; i < numAdult; i++) {
-				new Adult(0,i);
+				new Adult(0).setName("Adult("+i+")");
 			}
 			
 			
